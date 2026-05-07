@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+        .search-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .search-row select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .btn {
+            padding: 8px 16px;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #f9f9f9;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Operaciones</h1>
+        
+        <div class="search-row">
+            <input type="text" placeholder="Buscar por...">
+            <select>
+                <option>Todos los tipos</option>
+                <option>Deposito</option>
+                <option>Retiro</option>
+                <option>Disposición</option>
+                <option>Pago</option>
+            </select>
+            <select>
+                <option>Ultimo mes</option>
+                <option>Ultimos 3 meses</option>
+                <option>Ultimo año</option>
+            </select>
+            <button class="btn">+ Registrar</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Contrato</th>
+                    <th>Producto</th>
+                    <th>Tipo</th>
+                    <th>Monto</th>
+                    <th>Moneda</th>
+                    <th>Fecha</th>
+                    <th>Estatus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aqui llamaremos a la tabla cuando la tengamos -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
