@@ -23,6 +23,10 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok' });
 });
 
+// rutas a login
+const rutasLogin = require('./routes/login.routes');
+app.use('/login', rutasLogin);
+
 // rutas a clientes
 const rutasClientes = require('./routes/clientes.routes');
 app.use('/clientes', rutasClientes);
@@ -33,7 +37,7 @@ app.use('/operaciones', rutasOperaciones);
 
 // rutas a alertas (Esto sirva para que cada ruta maneje cada parte
 // Tipo todo lo que empiece con "/cliente"   va a pasar por "clientes.routes.js" y asi)
-//Esto para no juntar todo y despues pelearnos para encontrar un problema 
+//Esto para no juntar todo y despues pelearnos para encontrar un problema
 
 const rutasAlertas = require('./routes/alertas.routes');
 app.use('/alertas', rutasAlertas);
@@ -45,6 +49,14 @@ app.use('/contratos', rutasContratos);
 // Rutas de reportes
 const rutasReportes = require('./routes/reportes.routes');
 app.use('/reportes', rutasReportes);
+
+// Rutas de reglas
+const rutasReglas = require('./routes/reglas.routes');
+app.use('/reglas', rutasReglas);
+
+// Rutas de historial
+const rutasHistorial = require('./routes/historial.routes');
+app.use('/historial', rutasHistorial);
 
 // Rutas de admin
 const rutasAdmin = require('./routes/admin.routes');
