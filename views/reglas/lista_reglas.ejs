@@ -1,17 +1,9 @@
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <%- include('css') %>
+    <%- include('../css') %>
 </head>
 <body>
-
-<!-- utilice chat para estas cosas: margin-left:10px , brand-logo left
-<div class="container" style="margin-top:30px"></div>
-<%- include('scripts') %> -->
-
 
 <nav class="blue">
     <div class="nav-wrapper">
@@ -22,17 +14,15 @@
             <li><a href="/alertas/lista">Alertas</a></li>
             <li><a href="/contratos/lista">Contratos</a></li>
             <li><a href="/reportes/lista">Reportes</a></li>
-            <li><a href="/reglas/lista">Reglas</a></li>
-            <li><a href="/historial/lista">Historial</a></li>
             <li><a href="/admin/lista">Admin</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="container" style="margin-top:30px">
-    <h4>Dashboard</h4>
+    <h4>Reglas de Alerta</h4>
 </div>
 
-<%- include('scripts') %>
+<%- include('../scripts') %>
 </body>
 </html>
