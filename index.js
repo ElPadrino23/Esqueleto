@@ -55,6 +55,18 @@ app.get("/", (req, res) => {
     res.render("dashboard");
 });
 
+// Rutas de login
+const rutasLogin = require('./routes/login.routes');
+app.use('/login', rutasLogin);
+
+// Rutas de reglas
+const rutasReglas = require('./routes/reglas.routes');
+app.use('/reglas', rutasReglas);
+
+// Rutas de historial
+const rutasHistorial = require('./routes/historial.routes');
+app.use('/historial', rutasHistorial);
+
 // inicia el servidor en el host 3000
 app.listen(3000, () => {
     console.log('-> http://localhost:3000');
