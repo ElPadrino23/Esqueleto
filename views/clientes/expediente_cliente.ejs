@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Expediente del Cliente</title>
+</head>
+<body>
+    <h1>Expediente del Cliente</h1>
+    
+    <form id="formExpediente" enctype="multipart/form-data">
+        
+        <h2>Datos Generales del Cliente</h2>
+
+        <h3>Datos generales</h3>
+        <label>Nombre o razon social:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <br><br>
+
+        <label>Tipo de cliente:</label>
+        <select id="tipoCliente" name="tipoCliente" required>
+            <option value="">Seleccionar</option>
+            <option value="Persona Fisica">Persona Física</option>
+            <option value="Persona Moral">Persona Moral</option>
+            <option value="Extranjero">Extranjero</option>
+        </select>
+        <br><br>
+
+        <label>RFC:</label>
+        <input type="text" id="rfc" name="rfc" required>
+        <br><br>
+
+        <label>CURP (si aplica):</label>
+        <input type="text" id="curp" name="curp">
+        <br><br>
+
+        <label>Estatus del cliente:</label>
+        <select id="estatusCliente" name="estatusCliente" required>
+            <option value="">Seleccionar</option>
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+            <option value="Suspendido">Suspendido</option>
+            <option value="Cancelado">Cancelado</option>
+        </select>
+        <br><br>
+
+        <h3>Informacion de contacto</h3>
+        <label>Nombre del contacto principal:</label>
+        <input type="text" id="contactoPrincipal" name="contactoPrincipal" required>
+        <br><br>
+
+        <label>Telefono:</label>
+        <input type="tel" id="telefono" name="telefono" required>
+        <br><br>
+
+        <label>Correo electronico:</label>
+        <input type="email" id="correo" name="correo" required>
+        <br><br>
+
+        <h3>Domicilio</h3>
+        <label>Calle y numero:</label>
+        <input type="text" id="calle" name="calle" required>
+        <br><br>
+
+        <label>Colonia:</label>
+        <input type="text" id="colonia" name="colonia" required>
+        <br><br>
+
+        <label>Ciudad:</label>
+        <input type="text" id="ciudad" name="ciudad" required>
+        <br><br>
+                <!-- Esta parte fue  hecha completamente con chat, que flojera poner cada estado unio por uno, no?-->
+        <label>Estado:</label>
+        <select id="estado" name="estado" required>
+            <option value="">Seleccionar...</option>
+            <option value="Aguascalientes">Aguascalientes</option>
+            <option value="Baja California">Baja California</option>
+            <option value="Baja California Sur">Baja California Sur</option>
+            <option value="Campeche">Campeche</option>
+            <option value="Chiapas">Chiapas</option>
+            <option value="Chihuahua">Chihuahua</option>
+            <option value="Ciudad de México">Ciudad de México</option>
+            <option value="Coahuila">Coahuila</option>
+            <option value="Colima">Colima</option>
+            <option value="Durango">Durango</option>
+            <option value="Guanajuato">Guanajuato</option>
+            <option value="Guerrero">Guerrero</option>
+            <option value="Hidalgo">Hidalgo</option>
+            <option value="Jalisco">Jalisco</option>
+            <option value="México">México</option>
+            <option value="Michoacán">Michoacán</option>
+            <option value="Morelos">Morelos</option>
+            <option value="Nayarit">Nayarit</option>
+            <option value="Nuevo León">Nuevo León</option>
+            <option value="Oaxaca">Oaxaca</option>
+            <option value="Puebla">Puebla</option>
+            <option value="Querétaro">Querétaro</option>
+            <option value="Quintana Roo">Quintana Roo</option>
+            <option value="San Luis Potosí">San Luis Potosí</option>
+            <option value="Sinaloa">Sinaloa</option>
+            <option value="Sonora">Sonora</option>
+            <option value="Tabasco">Tabasco</option>
+            <option value="Tamaulipas">Tamaulipas</option>
+            <option value="Tlaxcala">Tlaxcala</option>
+            <option value="Veracruz">Veracruz</option>
+            <option value="Yucatán">Yucatán</option>
+            <option value="Zacatecas">Zacatecas</option>
+        </select>
+        <br><br>
+                <!-- Hasta aqui -->
+        <label>Codigo postal:</label>
+        <input type="text" id="codigoPostal" name="codigoPostal" required>
+        <br><br>
+
+        <h3>Informacion operativa</h3>
+        <label>Nivel de riesgo:</label>
+        <select id="nivelRiesgo" name="nivelRiesgo" required disabled>
+            <option value="">Se calcula automaticamente</option>
+            <option value="Bajo">Bajo</option>
+            <option value="Medio">Medio</option>
+            <option value="Alto">Alto</option>
+        </select>
+        <br><br>
+
+        <label>Cliente PEP:</label>
+        <select id="esPEP" name="esPEP" required>
+            <option value="">Seleccionar</option>
+            <option value="No">No</option>
+            <option value="Sí">Sí</option>
+        </select>
+        <br><br>
+
+        <label>Limite operativo autorizado:</label>
+        <input type="number" id="limiteOperativo" name="limiteOperativo" step="0.01" required>
+        <br><br>
+
+        <label>Observaciones:</label>
+        <textarea id="observaciones" name="observaciones"></textarea>
+        <br><br>
+
+        <h2>Documentos del Cliente</h2>
+
+        <label>Identificación oficial:</label>
+        <input type="file" id="docIdentificacion" name="docIdentificacion" accept=".pdf,.jpg,.jpeg,.png">
+        <br><br>
+
+        <label>Comprobante de domicilio:</label>
+        <input type="file" id="docDomicilio" name="docDomicilio" accept=".pdf,.jpg,.jpeg,.png">
+        <br><br>
+
+        <label>Constancia de situación fiscal:</label>
+        <input type="file" id="docFiscal" name="docFiscal" accept=".pdf,.jpg,.jpeg,.png">
+        <br><br>
+
+        <label>Contrato firmado:</label>
+        <input type="file" id="docContrato" name="docContrato" accept=".pdf,.jpg,.jpeg,.png">
+        <br><br>
+
+        <label>Poder notarial (si aplica):</label>
+        <input type="file" id="docPoder" name="docPoder" accept=".pdf,.jpg,.jpeg,.png">
+        <br><br>
+
+        <label>Documentación adicional:</label>
+        <input type="file" id="docAdicional" name="docAdicional" accept=".pdf,.jpg,.jpeg,.png">
+        <br><br>
+
+        <h2>Resumen del Expediente</h2>
+
+        <p><strong>Nombre o razón social:</strong> <span id="resumenNombre">-</span></p>
+        <p><strong>RFC:</strong> <span id="resumenRFC">-</span></p>
+        <p><strong>Tipo de cliente:</strong> <span id="resumenTipo">-</span></p>
+        <p><strong>Nivel de riesgo:</strong> <span id="resumenRiesgo">-</span></p>
+        <p><strong>Documentos cargados:</strong> <span id="resumenDocs">0</span></p>
+
+        <br><br>
+        <button type="button" onclick="history.back()">Cancelar</button>
+        <button type="submit">Guardar Expediente</button>
+    </form>
+
+    <script>
+        document.getElementById('nombre').addEventListener('change', (e) => {
+            document.getElementById('resumenNombre').textContent = e.target.value || '-';
+        });
+
+        document.getElementById('rfc').addEventListener('change', (e) => {
+            document.getElementById('resumenRFC').textContent = e.target.value || '-';
+        });
+
+        document.getElementById('tipoCliente').addEventListener('change', (e) => {
+            document.getElementById('resumenTipo').textContent = e.target.value || '-';
+        });
+
+        function calcularNivelRiesgo() {
+            const limiteOperativo = parseFloat(document.getElementById('limiteOperativo').value) || 0;
+            const esPEP = document.getElementById('esPEP').value;
+
+            let riesgo = 'Bajo';
+
+            if (esPEP === 'Sí') {
+                riesgo = 'Alto';
+            } else if (limiteOperativo > 1500000) {
+                riesgo = 'Medio';
+            }
+
+            document.getElementById('nivelRiesgo').value = riesgo;
+            document.getElementById('resumenRiesgo').textContent = riesgo;
+        }
+
+        document.getElementById('limiteOperativo').addEventListener('change', calcularNivelRiesgo);
+        document.getElementById('limiteOperativo').addEventListener('input', calcularNivelRiesgo);
+        document.getElementById('esPEP').addEventListener('change', calcularNivelRiesgo);
+
+        document.getElementById('docIdentificacion').addEventListener('change', () => actualizarContadorDocs());
+        document.getElementById('docDomicilio').addEventListener('change', () => actualizarContadorDocs());
+        document.getElementById('docFiscal').addEventListener('change', () => actualizarContadorDocs());
+        document.getElementById('docContrato').addEventListener('change', () => actualizarContadorDocs());
+        document.getElementById('docPoder').addEventListener('change', () => actualizarContadorDocs());
+        document.getElementById('docAdicional').addEventListener('change', () => actualizarContadorDocs());
+
+        function actualizarContadorDocs() {
+            const docs = [
+                document.getElementById('docIdentificacion').files.length > 0,
+                document.getElementById('docDomicilio').files.length > 0,
+                document.getElementById('docFiscal').files.length > 0,
+                document.getElementById('docContrato').files.length > 0,
+                document.getElementById('docPoder').files.length > 0,
+                document.getElementById('docAdicional').files.length > 0
+            ];
+            document.getElementById('resumenDocs').textContent = docs.filter(d => d).length;
+        }
+
+        document.getElementById('formExpediente').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(document.getElementById('formExpediente'));
+            
+            try {
+                const response = await fetch('/clientes/expediente', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const resultado = await response.json();
+
+                if (resultado.exito) {
+                    alert('Expediente guardado, el ID del cliente es: ' + resultado.idCliente);
+                    history.back();
+                } else {
+                    alert('Error: ' + resultado.error);
+                }
+            } catch (error) {
+                alert('Error al enviar el formulario: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

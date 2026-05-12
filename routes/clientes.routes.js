@@ -1,6 +1,3 @@
-// Route de clientes
-// GET GET POST GET POST POST 
-
 const express            = require('express');
 const router             = express.Router();
 const controllerClientes = require('../controllers/clientes.controller');
@@ -13,6 +10,12 @@ router.get('/agregar', controllerClientes.VistaAgregarCliente);
 
 // dar de alta a nuevos clientes 
 router.post('/agregar', controllerClientes.AgregarCliente);
+
+// Formulario del expediente del cliente (3 pasos)
+router.get('/expediente', controllerClientes.VistaExpedienteCliente);
+
+// Guardar el expediente del cliente
+router.post('/expediente', controllerClientes.GuardarExpediente);
 
 // trar el formulariuo editable 
 router.get('/editar', controllerClientes.VistaEditarCliente);

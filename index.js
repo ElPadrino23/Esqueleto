@@ -4,16 +4,19 @@
 const express    = require('express');
 const bodyParser = require('body-parser');
 const path       = require('path');
+const fileUpload = require('express-fileupload');
 const app = express();
-
-
 
 // Notificar el uso de ejs
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-// Ayuda a que el servidor entienda los datos que llegan
-app.use(bodyParser.urlencoded({ extended: false }));
+// Middleware para archivos
+app.use(fileUpload());
+
+// Middleware para parsear datos
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // jala los archivos que esten publicos
 app.use(express.static(path.join(__dirname, 'public')));
@@ -31,10 +34,7 @@ app.use('/clientes', rutasClientes);
 const rutasOperaciones = require('./routes/operaciones.routes');
 app.use('/operaciones', rutasOperaciones);
 
-// rutas a alertas (Esto sirva para que cada ruta maneje cada parte
-// Tipo todo lo que empiece con "/cliente"   va a pasar por "clientes.routes.js" y asi)
-//Esto para no juntar todo y despues pelearnos para encontrar un problema 
-
+// rutas a alertas
 const rutasAlertas = require('./routes/alertas.routes');
 app.use('/alertas', rutasAlertas);
 
