@@ -1,9 +1,16 @@
 const modelClientes = require('../models/clientes.model');
 
-// Aqui exportaremos todos los datos de los clientes desde la BD
+// NO TOCAR< ME TARDE MUCHO PARA QUE JALARA, esto jala los datos de la DB para mostrarlos 
+// De aqui va directo a views, solo hay que llamarlo
+
+
 module.exports.ObtenerClientes = async (req, res) => {
-    res.render('./clientes/lista_clientes');
+    const resultado = await modelClientes.ObtenerClientesLista();
+    console.log('Resultado:', resultado);
+    console.log('Clientes:', resultado.clientes);
+    res.render('./clientes/lista_clientes', { clientes: resultado.clientes });
 };
+
 
 // Agregar a un cliente
 module.exports.VistaAgregarCliente = async (req, res) => {

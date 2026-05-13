@@ -1,6 +1,32 @@
 const supabase = require('../config/supabase');
 const crypto = require('crypto');
 
+module.exports.ObtenerClientesLista = async () => {
+    try {
+        const { data: clientes, error } = await supabase
+            .from('cliente')
+            .select('*')
+            .order('idcliente', { ascending: false });
+
+        if (error) {
+            throw new Error(`Error al obtener clientes: ${error.message}`);
+        }
+
+        return { 
+            exito: true, 
+            clientes: clientes || []
+        };
+
+    } catch (error) {
+        return { 
+            exito: false, 
+            clientes: [],
+            error: error.message 
+        };
+    }
+};
+
+
 module.exports.GuardarCliente = async (datosCliente, archivos) => {
     try {
         // Guardar cliente en tabla cliente
