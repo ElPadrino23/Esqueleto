@@ -2,255 +2,239 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Expediente del Cliente</title>
+    <title>Nuevo Expediente</title>
 </head>
 <body>
-    <h1>Expediente del Cliente</h1>
-    
-    <form id="formExpediente" enctype="multipart/form-data">
-        
-        <h2>Datos Generales del Cliente</h2>
+    <h1>Nuevo Expediente de Cliente</h1>
+    <a href="/clientes/lista">Volver a la lista</a>
+    <br><br>
 
-        <h3>Datos generales</h3>
-        <label>Nombre o razon social:</label>
-        <input type="text" id="nombre" name="nombre" required>
+    <!-- wizard-->
+    <div id="paso1">
+        <h2>Paso 1 de 3: Datos Generales</h2>
+        <br>
+
+        Nombre / Razon Social: <input type="text" id="nombre" required>
         <br><br>
 
-        <label>Tipo de cliente:</label>
-        <select id="tipoCliente" name="tipoCliente" required>
-            <option value="">Seleccionar</option>
-            <option value="Persona Fisica">Persona Física</option>
-            <option value="Persona Moral">Persona Moral</option>
-            <option value="Extranjero">Extranjero</option>
+        RFC: <input type="text" id="rfc" required>
+        <br><br>
+
+        CURP: <input type="text" id="curp">
+        <br><br>
+
+        Tipo de cliente:
+        <select id="tipoCliente">
+            <option value="Fisica">Persona Fisica</option>
+            <option value="Moral">Persona Moral</option>
         </select>
         <br><br>
 
-        <label>RFC:</label>
-        <input type="text" id="rfc" name="rfc" required>
-        <br><br>
-
-        <label>CURP (si aplica):</label>
-        <input type="text" id="curp" name="curp">
-        <br><br>
-
-        <label>Estatus del cliente:</label>
-        <select id="estatusCliente" name="estatusCliente" required>
-            <option value="">Seleccionar</option>
+        Estatus:
+        <select id="estatusCliente">
             <option value="Activo">Activo</option>
             <option value="Inactivo">Inactivo</option>
-            <option value="Suspendido">Suspendido</option>
-            <option value="Cancelado">Cancelado</option>
+            <option value="En revision">En revision</option>
         </select>
         <br><br>
 
-        <h3>Informacion de contacto</h3>
-        <label>Nombre del contacto principal:</label>
-        <input type="text" id="contactoPrincipal" name="contactoPrincipal" required>
+        Contacto principal: <input type="text" id="contactoPrincipal">
         <br><br>
 
-        <label>Telefono:</label>
-        <input type="tel" id="telefono" name="telefono" required>
+        Telefono: <input type="text" id="telefono">
         <br><br>
 
-        <label>Correo electronico:</label>
-        <input type="email" id="correo" name="correo" required>
+        Correo electronico: <input type="email" id="correo">
         <br><br>
 
-        <h3>Domicilio</h3>
-        <label>Calle y numero:</label>
-        <input type="text" id="calle" name="calle" required>
+        Calle y numero: <input type="text" id="calle">
         <br><br>
 
-        <label>Colonia:</label>
-        <input type="text" id="colonia" name="colonia" required>
+        Colonia: <input type="text" id="colonia">
         <br><br>
 
-        <label>Ciudad:</label>
-        <input type="text" id="ciudad" name="ciudad" required>
-        <br><br>
-                <!-- Esta parte fue  hecha completamente con chat, que flojera poner cada estado unio por uno, no?-->
-        <label>Estado:</label>
-        <select id="estado" name="estado" required>
-            <option value="">Seleccionar...</option>
-            <option value="Aguascalientes">Aguascalientes</option>
-            <option value="Baja California">Baja California</option>
-            <option value="Baja California Sur">Baja California Sur</option>
-            <option value="Campeche">Campeche</option>
-            <option value="Chiapas">Chiapas</option>
-            <option value="Chihuahua">Chihuahua</option>
-            <option value="Ciudad de México">Ciudad de México</option>
-            <option value="Coahuila">Coahuila</option>
-            <option value="Colima">Colima</option>
-            <option value="Durango">Durango</option>
-            <option value="Guanajuato">Guanajuato</option>
-            <option value="Guerrero">Guerrero</option>
-            <option value="Hidalgo">Hidalgo</option>
-            <option value="Jalisco">Jalisco</option>
-            <option value="México">México</option>
-            <option value="Michoacán">Michoacán</option>
-            <option value="Morelos">Morelos</option>
-            <option value="Nayarit">Nayarit</option>
-            <option value="Nuevo León">Nuevo León</option>
-            <option value="Oaxaca">Oaxaca</option>
-            <option value="Puebla">Puebla</option>
-            <option value="Querétaro">Querétaro</option>
-            <option value="Quintana Roo">Quintana Roo</option>
-            <option value="San Luis Potosí">San Luis Potosí</option>
-            <option value="Sinaloa">Sinaloa</option>
-            <option value="Sonora">Sonora</option>
-            <option value="Tabasco">Tabasco</option>
-            <option value="Tamaulipas">Tamaulipas</option>
-            <option value="Tlaxcala">Tlaxcala</option>
-            <option value="Veracruz">Veracruz</option>
-            <option value="Yucatán">Yucatán</option>
-            <option value="Zacatecas">Zacatecas</option>
-        </select>
-        <br><br>
-                <!-- Hasta aqui -->
-        <label>Codigo postal:</label>
-        <input type="text" id="codigoPostal" name="codigoPostal" required>
+        Ciudad: <input type="text" id="ciudad">
         <br><br>
 
-        <h3>Informacion operativa</h3>
-        <label>Nivel de riesgo:</label>
-        <select id="nivelRiesgo" name="nivelRiesgo" required disabled>
-            <option value="">Se calcula automaticamente</option>
-            <option value="Bajo">Bajo</option>
-            <option value="Medio">Medio</option>
-            <option value="Alto">Alto</option>
-        </select>
+        Estado: <input type="text" id="estado">
         <br><br>
 
-        <label>Cliente PEP:</label>
-        <select id="esPEP" name="esPEP" required>
-            <option value="">Seleccionar</option>
-            <option value="No">No</option>
-            <option value="Sí">Sí</option>
-        </select>
+        Codigo postal: <input type="text" id="codigoPostal">
         <br><br>
 
-        <label>Limite operativo autorizado:</label>
-        <input type="number" id="limiteOperativo" name="limiteOperativo" step="0.01" required>
+        Limite  autorizado (MXN): <input type="number" id="limiteOperativo" min="0">
         <br><br>
 
-        <label>Observaciones:</label>
-        <textarea id="observaciones" name="observaciones"></textarea>
+        <label>
+            <input type="checkbox" id="esPEP">
+            Es Persona Expuesta Politicamente (PEP)
+        </label>
         <br><br>
 
-        <h2>Documentos del Cliente</h2>
-
-        <label>Identificación oficial:</label>
-        <input type="file" id="docIdentificacion" name="docIdentificacion" accept=".pdf,.jpg,.jpeg,.png">
+        Observaciones: <textarea id="observaciones"></textarea>
         <br><br>
 
-        <label>Comprobante de domicilio:</label>
-        <input type="file" id="docDomicilio" name="docDomicilio" accept=".pdf,.jpg,.jpeg,.png">
+        Nivel de riesgo calculado: <b id="nivelRiesgo">Bajo</b>
         <br><br>
 
-        <label>Constancia de situación fiscal:</label>
-        <input type="file" id="docFiscal" name="docFiscal" accept=".pdf,.jpg,.jpeg,.png">
+        <button onclick="irPaso2()">Siguiente: Documentos &rarr;</button>
+    </div>
+
+
+    <!-- docuemntacion-->
+    <div id="paso2" style="display:none">
+        <h2>Paso 2 de 3: Documentos</h2>
+        <br>
+
+        INE o passport: <input type="file" id="ine">
         <br><br>
 
-        <label>Contrato firmado:</label>
-        <input type="file" id="docContrato" name="docContrato" accept=".pdf,.jpg,.jpeg,.png">
+        Comprobante de domicilio: <input type="file" id="compDomicilio">
         <br><br>
 
-        <label>Poder notarial (si aplica):</label>
-        <input type="file" id="docPoder" name="docPoder" accept=".pdf,.jpg,.jpeg,.png">
+        RFC: <input type="file" id="docRfc">
         <br><br>
 
-        <label>Documentación adicional:</label>
-        <input type="file" id="docAdicional" name="docAdicional" accept=".pdf,.jpg,.jpeg,.png">
+        CURP: <input type="file" id="docCurp">
         <br><br>
 
-        <h2>Resumen del Expediente</h2>
-
-        <p><strong>Nombre o razón social:</strong> <span id="resumenNombre">-</span></p>
-        <p><strong>RFC:</strong> <span id="resumenRFC">-</span></p>
-        <p><strong>Tipo de cliente:</strong> <span id="resumenTipo">-</span></p>
-        <p><strong>Nivel de riesgo:</strong> <span id="resumenRiesgo">-</span></p>
-        <p><strong>Documentos cargados:</strong> <span id="resumenDocs">0</span></p>
-
+        Constancia de situacion fiscal: <input type="file" id="constancia">
         <br><br>
-        <button type="button" onclick="history.back()">Cancelar</button>
-        <button type="submit">Guardar Expediente</button>
-    </form>
+
+        <button onclick="irPaso1()">&larr; Anterior</button>
+        &nbsp;
+        <button onclick="irPaso3()">Siguiente: Resumen &rarr;</button>
+    </div>
+
+
+    <!--Resumen -->
+    <div id="paso3" style="display:none">
+        <h2>Paso 3 de 3: Resumen</h2>
+        <br>
+
+        <div id="resumen"></div>
+        <br>
+
+        <button onclick="irPaso2()">&larr; Anterior</button>
+        &nbsp;
+        <button onclick="guardarExpediente()">Guardar Expediente</button>
+    </div>
+
 
     <script>
-        document.getElementById('nombre').addEventListener('change', (e) => {
-            document.getElementById('resumenNombre').textContent = e.target.value || '-';
-        });
 
-        document.getElementById('rfc').addEventListener('change', (e) => {
-            document.getElementById('resumenRFC').textContent = e.target.value || '-';
-        });
+        document.getElementById('esPEP').addEventListener('change', calcularRiesgo);
+        document.getElementById('limiteOperativo').addEventListener('input', calcularRiesgo);
 
-        document.getElementById('tipoCliente').addEventListener('change', (e) => {
-            document.getElementById('resumenTipo').textContent = e.target.value || '-';
-        });
+        function calcularRiesgo() {
+            const esPEP   = document.getElementById('esPEP').checked;
+            const limite  = parseFloat(document.getElementById('limiteOperativo').value) || 0;
+            let riesgo    = 'Bajo';
 
-        function calcularNivelRiesgo() {
-            const limiteOperativo = parseFloat(document.getElementById('limiteOperativo').value) || 0;
-            const esPEP = document.getElementById('esPEP').value;
-
-            let riesgo = 'Bajo';
-
-            if (esPEP === 'Sí') {
+            if (esPEP) {
                 riesgo = 'Alto';
-            } else if (limiteOperativo > 1500000) {
+            } else if (limite > 1500000) {
                 riesgo = 'Medio';
             }
 
-            document.getElementById('nivelRiesgo').value = riesgo;
-            document.getElementById('resumenRiesgo').textContent = riesgo;
+            document.getElementById('nivelRiesgo').textContent = riesgo;
         }
 
-        document.getElementById('limiteOperativo').addEventListener('change', calcularNivelRiesgo);
-        document.getElementById('limiteOperativo').addEventListener('input', calcularNivelRiesgo);
-        document.getElementById('esPEP').addEventListener('change', calcularNivelRiesgo);
-
-        document.getElementById('docIdentificacion').addEventListener('change', () => actualizarContadorDocs());
-        document.getElementById('docDomicilio').addEventListener('change', () => actualizarContadorDocs());
-        document.getElementById('docFiscal').addEventListener('change', () => actualizarContadorDocs());
-        document.getElementById('docContrato').addEventListener('change', () => actualizarContadorDocs());
-        document.getElementById('docPoder').addEventListener('change', () => actualizarContadorDocs());
-        document.getElementById('docAdicional').addEventListener('change', () => actualizarContadorDocs());
-
-        function actualizarContadorDocs() {
-            const docs = [
-                document.getElementById('docIdentificacion').files.length > 0,
-                document.getElementById('docDomicilio').files.length > 0,
-                document.getElementById('docFiscal').files.length > 0,
-                document.getElementById('docContrato').files.length > 0,
-                document.getElementById('docPoder').files.length > 0,
-                document.getElementById('docAdicional').files.length > 0
-            ];
-            document.getElementById('resumenDocs').textContent = docs.filter(d => d).length;
+        function irPaso1() {
+            document.getElementById('paso1').style.display = 'block';
+            document.getElementById('paso2').style.display = 'none';
+            document.getElementById('paso3').style.display = 'none';
         }
 
-        document.getElementById('formExpediente').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(document.getElementById('formExpediente'));
-            
-            try {
-                const response = await fetch('/clientes/expediente', {
-                    method: 'POST',
-                    body: formData
-                });
+        function irPaso2() {
+            const nombre = document.getElementById('nombre').value.trim();
+            const rfc    = document.getElementById('rfc').value.trim();
 
-                const resultado = await response.json();
-
-                if (resultado.exito) {
-                    alert('Expediente guardado, el ID del cliente es: ' + resultado.idCliente);
-                    history.back();
-                } else {
-                    alert('Error: ' + resultado.error);
-                }
-            } catch (error) {
-                alert('Error al enviar el formulario: ' + error.message);
+            if (!nombre || !rfc) {
+                alert('Nombre y RFC son obligatorios');
+                return;
             }
-        });
+
+            document.getElementById('paso1').style.display = 'none';
+            document.getElementById('paso2').style.display = 'block';
+            document.getElementById('paso3').style.display = 'none';
+        }
+
+        function irPaso3() {
+            const riesgo = document.getElementById('nivelRiesgo').textContent;
+
+            document.getElementById('resumen').innerHTML = `
+                <b>Nombre:</b> ${document.getElementById('nombre').value}<br>
+                <b>RFC:</b> ${document.getElementById('rfc').value}<br>
+                <b>CURP:</b> ${document.getElementById('curp').value || '-'}<br>
+                <b>Tipo:</b> ${document.getElementById('tipoCliente').value}<br>
+                <b>Estatus:</b> ${document.getElementById('estatusCliente').value}<br>
+                <b>Contacto:</b> ${document.getElementById('contactoPrincipal').value || '-'}<br>
+                <b>Telefono:</b> ${document.getElementById('telefono').value || '-'}<br>
+                <b>Correo:</b> ${document.getElementById('correo').value || '-'}<br>
+                <b>Direccion:</b> ${document.getElementById('calle').value}, ${document.getElementById('colonia').value}, ${document.getElementById('ciudad').value}, ${document.getElementById('estado').value} CP ${document.getElementById('codigoPostal').value}<br>
+                <b>Limite operativo:</b> $${document.getElementById('limiteOperativo').value || 0}<br>
+                <b>Es PEP:</b> ${document.getElementById('esPEP').checked ? 'Si' : 'No'}<br>
+                <b>Nivel de riesgo:</b> ${riesgo}<br>
+                <b>Observaciones:</b> ${document.getElementById('observaciones').value || '-'}<br>
+            `;
+
+            document.getElementById('paso1').style.display = 'none';
+            document.getElementById('paso2').style.display = 'none';
+            document.getElementById('paso3').style.display = 'block';
+        }
+
+        async function guardarExpediente() {
+            const formData = new FormData();
+
+            formData.append('nombre',           document.getElementById('nombre').value);
+            formData.append('rfc',              document.getElementById('rfc').value);
+            formData.append('curp',             document.getElementById('curp').value);
+            formData.append('tipoCliente',      document.getElementById('tipoCliente').value);
+            formData.append('estatusCliente',   document.getElementById('estatusCliente').value);
+            formData.append('contactoPrincipal',document.getElementById('contactoPrincipal').value);
+            formData.append('telefono',         document.getElementById('telefono').value);
+            formData.append('correo',           document.getElementById('correo').value);
+            formData.append('calle',            document.getElementById('calle').value);
+            formData.append('colonia',          document.getElementById('colonia').value);
+            formData.append('ciudad',           document.getElementById('ciudad').value);
+            formData.append('estado',           document.getElementById('estado').value);
+            formData.append('codigoPostal',     document.getElementById('codigoPostal').value);
+            formData.append('limiteOperativo',  document.getElementById('limiteOperativo').value);
+            formData.append('esPEP',            document.getElementById('esPEP').checked ? 'Sí' : 'No');
+            formData.append('nivelRiesgo',      document.getElementById('nivelRiesgo').textContent);
+            formData.append('observaciones',    document.getElementById('observaciones').value);
+
+            const archivos = [
+                { id: 'ine',          nombre: 'INE' },
+                { id: 'compDomicilio',nombre: 'Domicilio' },
+                { id: 'docRfc',       nombre: 'RFC' },
+                { id: 'docCurp',      nombre: 'CURP' },
+                { id: 'constancia',   nombre: 'ConstanciaFiscal' }
+            ];
+
+            archivos.forEach(function(a) {
+                const input = document.getElementById(a.id);
+                if (input.files[0]) {
+                    formData.append(a.nombre, input.files[0]);
+                }
+            });
+
+            try {
+                const resp   = await fetch('/clientes/expediente', { method: 'POST', body: formData });
+                const result = await resp.json();
+
+                if (result.exito) {
+                    alert('Expediente guardado, su ID: ' + result.idCliente);
+                    window.location.href = '/clientes/lista';
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (err) {
+                alert('Error al guardar: ' + err.message);
+            }
+        }
+
     </script>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+</head>
+<body>
+    <h1>Editar Cliente</h1>
+    <a href="/clientes/lista">Volver a la lista</a>
+    <br><br>
+
+    <form action="/clientes/editar" method="POST">
+
+        <input type="hidden" name="idCliente" value="<%= cliente.idcliente %>">
+
+        Nombre o Razon Social: <input type="text" name="nombre" value="<%= cliente.nombrerazonsocial %>" required>
+        <br><br>
+
+        RFC: <input type="text" name="rfc" value="<%= cliente.rfc %>" required>
+        <br><br>
+
+        Correo electronico: <input type="email" name="correo" value="<%= cliente.correoelectronico %>">
+        <br><br>
+
+        Telefono: <input type="text" name="telefono" value="<%= cliente.telefono %>">
+        <br><br>
+
+        Tipo de persona:
+        <select name="tipoPersona">
+            <option value="Fisica"  <%= cliente.tipocliente === 'Fisica'  ? 'selected' : '' %>>Persona Fisica</option>
+            <option value="Moral"   <%= cliente.tipocliente === 'Moral'   ? 'selected' : '' %>>Persona Moral</option>
+        </select>
+        <br><br>
+
+        <label>
+            <input type="checkbox" name="esPep" value="true" <%= cliente.espep ? 'checked' : '' %>>
+            Es Persona Expuesta Politicamente 
+        </label>
+        <br><br>
+
+        <button type="submit">Guardar Cambios</button>
+
+    </form>
+</body>
+</html>

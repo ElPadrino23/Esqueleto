@@ -1,17 +1,9 @@
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <%- include('css') %>
 </head>
 <body>
-
-<!-- utilice chat para estas cosas: margin-left:10px , brand-logo left
-<div class="container" style="margin-top:30px"></div>
-<%- include('scripts') %> -->
-
 
 <nav class="blue">
     <div class="nav-wrapper">
@@ -32,6 +24,36 @@
 
 <div class="container" style="margin-top:30px">
     <h4>Dashboard</h4>
+
+    <h3>Resumen General</h3>
+    <ul>
+        <li>Total de clientes registrados: 0</li>
+        <li>Total de operaciones realizadas: 0</li>
+        <li>Operaciones sospechosas detectadas: 0</li>
+        <li>Número de alertas activas: 0</li>
+        <li>Contratos próximos a vencer: 0</li>
+    </ul>
+
+    <h3>Graficas</h3>
+    <p>Grafica de operaciones por mes: (pendiente)</p>
+    <p>Grafica de alertas por tipo: (pendiente)</p>
+
+    <h3>Ultimas operaciones registradas</h3>
+    <ul>
+        <li>No hay operaciones</li>
+    </ul>
+
+    <h3>Ultimas alertas generadas</h3>
+    <ul>
+        <li>No hay alertas</li>
+    </ul>
+
+    <h3>Acciones rápidas</h3>
+    <a href="/clientes/lista">Ver clientes</a> |
+    <a href="/operaciones/lista">Ver operaciones</a> |
+    <a href="/alertas/lista">Ver alertas</a> |
+    <a href="/operaciones/agregar">Crear operación</a> |
+    <a href="/clientes/expediente">Agregar cliente</a>
 </div>
 
 <%- include('scripts') %>

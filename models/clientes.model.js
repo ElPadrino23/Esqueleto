@@ -1,6 +1,10 @@
-const supabase = require('../config/supabase');
-const crypto = require('crypto');
+// Modelo para clientes
 
+const supabase = require('../config/supabase');
+const crypto   = require('crypto');
+
+
+// Obtener lista de todos los clientes
 module.exports.ObtenerClientesLista = async () => {
     try {
         const { data: clientes, error } = await supabase
@@ -8,91 +12,116 @@ module.exports.ObtenerClientesLista = async () => {
             .select('*')
             .order('idcliente', { ascending: false });
 
-        if (error) {
-            throw new Error(`Error al obtener clientes: ${error.message}`);
-        }
-
-        return { 
-            exito: true, 
-            clientes: clientes || []
-        };
+        if (error) throw new Error(`Error al obtener clientes: ${error.message}`);
+        return { exito: true, clientes: clientes || [] };
 
     } catch (error) {
-        return { 
-            exito: false, 
-            clientes: [],
-            error: error.message 
-        };
+        return { exito: false, clientes: [], error: error.message };
     }
 };
 
 
+// Guardar cliente nuevo con sus documentos
 module.exports.GuardarCliente = async (datosCliente, archivos) => {
     try {
-        // Guardar cliente en tabla cliente
         const { data: cliente, error: errorCliente } = await supabase
             .from('cliente')
             .insert([{
-                nombrerazonsocial: datosCliente.nombre,
-                tipocliente: datosCliente.tipoCliente,
-                rfc: datosCliente.rfc,
-                curp: datosCliente.curp || null,
-                estatuscliente: datosCliente.estatusCliente,
-                nombrecontactoprincipal: datosCliente.contactoPrincipal,
-                telefono: datosCliente.telefono,
-                correoelectronico: datosCliente.correo,
-                callenumero: datosCliente.calle,
-                colonia: datosCliente.colonia,
-                ciudad: datosCliente.ciudad,
-                estado: datosCliente.estado,
-                codigopostal: datosCliente.codigoPostal,
-                nivelriesgo: datosCliente.nivelRiesgo,
-                espep: datosCliente.esPEP === 'Sí' ? true : false,
-                limiteoperativoautorizado: parseFloat(datosCliente.limiteOperativo),
-                observaciones: datosCliente.observaciones || null
+                nombrerazonsocial:          datosCliente.nombre,
+                tipocliente:                datosCliente.tipoCliente,
+                rfc:                        datosCliente.rfc,
+                curp:                       datosCliente.curp || null,
+                estatuscliente:             datosCliente.estatusCliente,
+                nombrecontactoprincipal:    datosCliente.contactoPrincipal,
+                telefono:                   datosCliente.telefono,
+                correoelectronico:          datosCliente.correo,
+                callenumero:                datosCliente.calle,
+                colonia:                    datosCliente.colonia,
+                ciudad:                     datosCliente.ciudad,
+                estado:                     datosCliente.estado,
+                codigopostal:               datosCliente.codigoPostal,
+                nivelriesgo:                datosCliente.nivelRiesgo,
+                espep:                      datosCliente.esPEP === 'Sí' ? true : false,
+                limiteoperativoautorizado:  parseFloat(datosCliente.limiteOperativo) || 0,
+                observaciones:              datosCliente.observaciones || null
             }])
             .select();
 
-        if (errorCliente) {
-            throw new Error(`Error al guardar cliente: ${errorCliente.message}`);
-        }
+        if (errorCliente) throw new Error(`Error al guardar cliente: ${errorCliente.message}`);
 
         const idCliente = cliente[0].idcliente;
 
-        // Guardar documentos
+        // Guardar los docuemtnos subidos 
         if (archivos && Object.keys(archivos).length > 0) {
             for (const [tipoDoc, archivo] of Object.entries(archivos)) {
                 if (archivo && archivo.size > 0) {
-                    const nombreArchivo = archivo.name;
                     const hash = crypto.createHash('sha256').update(archivo.data).digest('hex');
-
-                    const { error: errorDoc } = await supabase
-                        .from('documentoCliente')
-                        .insert([{
-                         idcliente: idCliente,
-                         tipodocumento: tipoDoc,
-                         nombrearchivo: nombreArchivo,
-                        rutaarchivo: `/uploads/${tipoDoc}/${nombreArchivo}`,
-                            hashdocumento: hash
-                     }]);
-
-                    if (errorDoc) {
-                        console.error(`Error guardando documento ${tipoDoc}:`, errorDoc);
-                    }
+                    await supabase.from('documentocliente').insert([{
+                        idcliente:      idCliente,
+                        tipodocumento:  tipoDoc,
+                        nombrearchivo:  archivo.name,
+                        rutaarchivo:    `/uploads/${tipoDoc}/${archivo.name}`,
+                        hashdocumento:  hash
+                    }]);
                 }
             }
         }
 
-        return { 
-            exito: true, 
-            idCliente: idCliente,
-            mensaje: 'Cliente y documentos guardados correctamente'
-        };
+        return { exito: true, idCliente: idCliente, mensaje: 'Cliente y documentos guardados correctamente' };
 
     } catch (error) {
-        return { 
-            exito: false, 
-            error: error.message 
-        };
+        return { exito: false, error: error.message };
+    }
+};
+
+
+// Cliente por ID
+module.exports.ObtenerClientePorId = async (idCliente) => {
+    try {
+        const { data, error } = await supabase
+            .from('cliente')
+            .select('*')
+            .eq('idcliente', idCliente)
+            .single();
+
+        if (error) throw new Error(error.message);
+        return { exito: true, cliente: data };
+
+    } catch (error) {
+        return { exito: false, error: error.message };
+    }
+};
+
+
+// Editar cliente
+module.exports.EditarCliente = async (idCliente, datosActualizados) => {
+    try {
+        const { error } = await supabase
+            .from('cliente')
+            .update(datosActualizados)
+            .eq('idcliente', idCliente);
+
+        if (error) throw new Error(error.message);
+        return { exito: true };
+
+    } catch (error) {
+        return { exito: false, error: error.message };
+    }
+};
+
+
+// Eliminar cliente
+module.exports.EliminarCliente = async (idCliente) => {
+    try {
+        const { error } = await supabase
+            .from('cliente')
+            .delete()
+            .eq('idcliente', idCliente);
+
+        if (error) throw new Error(error.message);
+        return { exito: true };
+
+    } catch (error) {
+        return { exito: false, error: error.message };
     }
 };

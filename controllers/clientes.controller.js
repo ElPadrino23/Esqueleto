@@ -1,82 +1,69 @@
+// Controlar todo el apartado de los clientes
+
 const modelClientes = require('../models/clientes.model');
 
-// NO TOCAR< ME TARDE MUCHO PARA QUE JALARA, esto jala los datos de la DB para mostrarlos 
-// De aqui va directo a views, solo hay que llamarlo
 
-
+// NO TOCAR: esto jala los datos de la DB para mostrarlos
 module.exports.ObtenerClientes = async (req, res) => {
     const resultado = await modelClientes.ObtenerClientesLista();
-    console.log('Resultado:', resultado);
-    console.log('Clientes:', resultado.clientes);
     res.render('./clientes/lista_clientes', { clientes: resultado.clientes });
 };
 
 
-// Agregar a un cliente
-module.exports.VistaAgregarCliente = async (req, res) => {
-    res.render('./clientes/agregar_cliente');
-};
-
-// ver formulario y agregar a un nuevo cliente
-module.exports.AgregarCliente = async (req, res) => {
-    res.status(200).json({ mensaje: 'Cliente agregado' });
-};
-
-// Mostrar formulario de expediente del cliente
+// Mostrar formulario de nuevo expediente
 module.exports.VistaExpedienteCliente = async (req, res) => {
     res.render('./clientes/expediente_cliente');
 };
 
-// Guardar expediente del cliente
+
+// Recibir formulario y guardar cliente + documentos
 module.exports.GuardarExpediente = async (req, res) => {
     try {
-        console.log('req.body:', req.body);
-        console.log('req.files:', req.files);
-
         if (!req.body || Object.keys(req.body).length === 0) {
-            return res.status(400).json({ 
-                exito: false,
-                error: 'No se recibieron datos del formulario'
-            });
+            return res.status(400).json({ exito: false, error: 'No se recibieron datos' });
         }
 
-        const datosCliente = req.body;
-        const archivos = req.files || {};
-
-        const resultado = await modelClientes.GuardarCliente(datosCliente, archivos);
+        const resultado = await modelClientes.GuardarCliente(req.body, req.files || {});
 
         if (resultado.exito) {
-            res.status(200).json({ 
-                exito: true,
-                mensaje: resultado.mensaje,
-                idCliente: resultado.idCliente
-            });
+            res.status(200).json({ exito: true, mensaje: resultado.mensaje, idCliente: resultado.idCliente });
         } else {
-            res.status(400).json({ 
-                exito: false,
-                error: resultado.error 
-            });
+            res.status(400).json({ exito: false, error: resultado.error });
         }
+
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ 
-            exito: false,
-            error: error.message 
-        });
+        res.status(500).json({ exito: false, error: error.message });
     }
 };
 
-// Aqui desplegaremos un menu para editar clientes
+
+// Agregar a un cliente (redirige al expediente)
+module.exports.VistaAgregarCliente = async (req, res) => {
+    res.render('./clientes/expediente_cliente');
+};
+
+module.exports.AgregarCliente = async (req, res) => {
+    res.redirect('/clientes/lista');
+};
+
+
+// Editar cliente
 module.exports.VistaEditarCliente = async (req, res) => {
-    res.render('./clientes/editar_cliente');
+    const idCliente = req.query.id;
+    if (!idCliente) return res.redirect('/clientes/lista');
+
+    const resultado = await modelClientes.ObtenerClientePorId(idCliente);
+    if (!resultado.exito) return res.redirect('/clientes/lista');
+
+    res.render('./clientes/editar_cliente', { cliente: resultado.cliente });
 };
 
-// Obtener el formulario del cliente y poder modificarlo
 module.exports.EditarCliente = async (req, res) => {
-    res.status(200).json({ mensaje: 'Cliente editado' });
+    res.redirect('/clientes/lista');
 };
 
-// Borrar clientes
+
+// Borrar cliente
 module.exports.EliminarCliente = async (req, res) => {
-    res.status(200).json({ mensaje: 'Cliente eliminado' });
+    res.redirect('/clientes/lista');
 };

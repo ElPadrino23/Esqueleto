@@ -1,3 +1,5 @@
+// Route de clientes
+
 const express            = require('express');
 const router             = express.Router();
 const controllerClientes = require('../controllers/clientes.controller');
@@ -5,25 +7,19 @@ const controllerClientes = require('../controllers/clientes.controller');
 // mostrar todos los clientes
 router.get('/lista', controllerClientes.ObtenerClientes);
 
-// ver a los clientes agregados
-router.get('/agregar', controllerClientes.VistaAgregarCliente);
-
-// dar de alta a nuevos clientes 
-router.post('/agregar', controllerClientes.AgregarCliente);
-
-// Formulario del expediente del cliente (3 pasos)
+// nuevo expediente de cliente (formulario de 3 pasos)
 router.get('/expediente', controllerClientes.VistaExpedienteCliente);
-
-// Guardar el expediente del cliente
 router.post('/expediente', controllerClientes.GuardarExpediente);
 
-// trar el formulariuo editable 
-router.get('/editar', controllerClientes.VistaEditarCliente);
+// agregar cliente (apunta al expediente)
+router.get('/agregar', controllerClientes.VistaAgregarCliente);
+router.post('/agregar', controllerClientes.AgregarCliente);
 
-// guardar datos de cliente
+// editar cliente
+router.get('/editar', controllerClientes.VistaEditarCliente);
 router.post('/editar', controllerClientes.EditarCliente);
 
-// Eliminar cliente
+// eliminar cliente
 router.post('/eliminar', controllerClientes.EliminarCliente);
 
 module.exports = router;

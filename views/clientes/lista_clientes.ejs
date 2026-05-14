@@ -2,60 +2,41 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes</title>
-
 </head>
 <body>
-    <div class="container">
-        <h1>Clientes</h1>
-        
-        <div class="search-row">
-            <input type="text" placeholder="Realizar busqueda">
-            <button class="btn">Filtrar</button>
-            <a href="/clientes/expediente" class="btn" style="text-decoration: none; display: inline-block;">Nuevo cliente</a>
-        </div>
-        <!-- en caso de necesitar agregar mas datos a la tabla, se agrega en la parte de abajo con <th> -->
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre / Razon social</th>
-                    <th>RFC</th>
-                    <th>Tipo</th>
-                    <th>Riesgo</th>
-                    <th>PEP</th>
-                    <th>Docs</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% 
-                    if (clientes && clientes.length > 0) {
-                        for (let i = 0; i < clientes.length; i++) {
-                            let cliente = clientes[i];
-                            let esPEP = cliente.espep ? 'Sí' : 'No';
-                %>
-                            <tr>
-                                <td><%= cliente.idcliente %></td>
-                                <td><%= cliente.nombrerazonsocial %></td>
-                                <td><%= cliente.rfc %></td>
-                                <td><%= cliente.tipocliente %></td>
-                                <td><%= cliente.nivelriesgo %></td>
-                                <td><%= esPEP %></td>
-                                <td><a href="#">Ver</a></td>
-                            </tr>
-                <% 
-                        }
-                    } else {
-                %>
-                        <tr>
-                            <td colspan="7" style="text-align: center;">No hay clientes</td>
-                        </tr>
-                <% 
-                    }
-                %>
-            </tbody>
-        </table>
-    </div>
+    <h1>Clientes</h1>
+    <a href="/">Dashboard</a>
+    <br><br>
+
+    <a href="/clientes/expediente">+ Nuevo cliente</a>
+    <br><br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre / Razon social</th>
+                <th>RFC</th>
+                <th>Tipo</th>
+                <th>Riesgo</th>
+                <th>PEP</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% clientes.forEach(function(c) { %>
+            <tr>
+                <td><%= c.idcliente %></td>
+                <td><%= c.nombrerazonsocial %></td>
+                <td><%= c.rfc %></td>
+                <td><%= c.tipocliente %></td>
+                <td><%= c.nivelriesgo %></td>
+                <td><%= c.espep ? 'Si' : 'No' %></td>
+                <td><a href="/clientes/editar?id=<%= c.idcliente %>">Editar</a></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
 </body>
 </html>
