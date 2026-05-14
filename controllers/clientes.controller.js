@@ -2,19 +2,24 @@
 
 const modelClientes = require('../models/clientes.model');
 
-
 // NO TOCAR: esto jala los datos de la DB para mostrarlos
 module.exports.ObtenerClientes = async (req, res) => {
-    const resultado = await modelClientes.ObtenerClientesLista();
-    res.render('./clientes/lista_clientes', { clientes: resultado.clientes });
+    try {
+        const resultado = await modelClientes.ObtenerClientesLista();
+        res.render('./clientes/lista_clientes', { clientes: resultado.clientes });
+    } catch (error) {
+        res.status(500).send('Error: ' + error.message);
+    }
 };
-
 
 // Mostrar formulario de nuevo expediente
 module.exports.VistaExpedienteCliente = async (req, res) => {
-    res.render('./clientes/expediente_cliente');
+    try {
+        res.render('./clientes/expediente_cliente');
+    } catch (error) {
+        res.status(500).send('Error: ' + error.message);
+    }
 };
-
 
 // Recibir formulario y guardar cliente + documentos
 module.exports.GuardarExpediente = async (req, res) => {
@@ -36,34 +41,118 @@ module.exports.GuardarExpediente = async (req, res) => {
     }
 };
 
-
-// Agregar a un cliente (redirige al expediente)
+// Agregar a un cliente enviar al expediente
 module.exports.VistaAgregarCliente = async (req, res) => {
-    res.render('./clientes/expediente_cliente');
+    try {
+        res.render('./clientes/expediente_cliente');
+    } catch (error) {
+        res.status(500).send('Error: ' + error.message);
+    }
 };
 
 module.exports.AgregarCliente = async (req, res) => {
-    res.redirect('/clientes/lista');
+    try {
+        res.redirect('/clientes/lista');
+    } catch (error) {
+        res.status(500).send('Error: ' + error.message);
+    }
 };
 
-
-// Editar cliente
+// Solo lectura del expediente de los clientes, RF 2
 module.exports.VistaEditarCliente = async (req, res) => {
-    const idCliente = req.query.id;
-    if (!idCliente) return res.redirect('/clientes/lista');
+    try {
+        const idCliente = req.query.id;
+        if (!idCliente) return res.redirect('/clientes/lista');
 
-    const resultado = await modelClientes.ObtenerClientePorId(idCliente);
-    if (!resultado.exito) return res.redirect('/clientes/lista');
+        const resultado = await modelClientes.ObtenerClientePorId(idCliente);
+        if (!resultado.exito) return res.redirect('/clientes/lista');
 
-    res.render('./clientes/editar_cliente', { cliente: resultado.cliente });
+        res.render('./clientes/editar_cliente', { cliente: resultado.cliente });
+    } catch (error) {
+        res.status(500).send('Error: ' + error.message);
+    }
 };
 
+// PErmite actualizar al cliente RF 3 
 module.exports.EditarCliente = async (req, res) => {
-    res.redirect('/clientes/lista');
+    try {
+        const { idCliente } = req.body;
+        
+        if (!idCliente) {
+            return res.status(400).json({ exito: false, error: 'ID Cliente requerido' });
+        }
+
+        const datosActualizar = {
+            nombrerazonsocial: req.body.nombre,
+            rfc: req.body.rfc,
+            correoelectronico: req.body.correo,
+            telefono: req.body.telefono,
+            tipocliente: req.body.tipoPersona,
+            espep: req.body.esPep ? true : false
+        };
+
+        const resultado = await modelClientes.EditarCliente(idCliente, datosActualizar);
+
+        if (resultado.exito) {
+            res.redirect('/clientes/editar?id=' + idCliente);
+        } else {
+            res.status(400).json({ exito: false, error: resultado.error });
+        }
+    } catch (error) {
+        res.status(500).json({ exito: false, error: error.message });
+    }
 };
 
-
-// Borrar cliente
+// Eliminar cliente
 module.exports.EliminarCliente = async (req, res) => {
-    res.redirect('/clientes/lista');
+    try {
+        res.redirect('/clientes/lista');
+    } catch (error) {
+        res.status(500).send('Error: ' + error.message);
+    }
+};
+
+// RF ver docuemntos del cliente
+module.exports.VistaDocumentosCliente = async (req, res) => {
+    try {
+        const idCliente = req.query.id;
+        if (!idCliente) return res.redirect('/clientes/lista');
+
+        const resultado = await modelClientes.ObtenerClientePorId(idCliente);
+        if (!resultado.exito) return res.redirect('/clientes/lista');
+
+        const resultadoDocs = await modelClientes.ObtenerDocumentosCliente(idCliente);
+        
+        res.render('./clientes/documentos_cliente', { 
+            cliente: resultado.cliente,
+            documentos: resultadoDocs.documentos 
+        });
+    } catch (error) {
+        res.status(500).send('Error: ' + error.message);
+    }
+};
+
+// Cambiar el estado de los documentos
+module.exports.ValidarDocumento = async (req, res) => {
+    try {
+        const { idDocumento, estado } = req.body;
+        
+        if (!idDocumento || !estado) {
+            return res.status(400).json({ exito: false, error: 'Faltan datos' });
+        }
+
+        if (!['Validado', 'Rechazado'].includes(estado)) {
+            return res.status(400).json({ exito: false, error: 'Estado inválido' });
+        }
+
+        const resultado = await modelClientes.ActualizarEstadoDocumento(idDocumento, estado);
+        
+        if (resultado.exito) {
+            res.json({ exito: true, mensaje: `Documento ${estado.toLowerCase()}` });
+        } else {
+            res.status(400).json({ exito: false, error: resultado.error });
+        }
+    } catch (error) {
+        res.status(500).json({ exito: false, error: error.message });
+    }
 };

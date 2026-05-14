@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentos del Cliente</title>
+</head>
+<body>
+    <h1>Documentos de <%= cliente.nombrerazonsocial %></h1>
+    <a href="/clientes/lista">Volver a la lista</a>
+    &nbsp;|&nbsp;
+    <a href="/clientes/editar?id=<%= cliente.idcliente %>">Ver Datos</a>
+    <br><br>
+
+    <% if (documentos.length === 0) { %>
+        <p>No hay documentos cargados para este cliente</p>
+    <% } else { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo de Documento</th>
+                    <th>Nombre del Archivo</th>
+                    <th>Estado Validacion</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% documentos.forEach(function(doc) { %>
+                <tr>
+                    <td><%= doc.iddocumentocliente %></td>
+                    <td><%= doc.tipodocumento %></td>
+                    <td><%= doc.nombrearchivo %></td>
+                    <td>
+                        <span id="estado-<%= doc.iddocumentocliente %>">
+                            <%= doc.estadovalidacion || 'Pendiente' %>
+                        </span>
+                    </td>
+                    <td>   <!--Problema al compilarlo, nos ayudo chatcito -->
+                        <button class="btn-validar" data-id="<%= doc.iddocumentocliente %>" data-estado="Validado">Validar</button>
+                        &nbsp;
+                        <button class="btn-validar" data-id="<%= doc.iddocumentocliente %>" data-estado="Rechazado">Rechazar</button>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <script>
+        document.querySelectorAll('.btn-validar').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const idDocumento = this.getAttribute('data-id');
+                const estado = this.getAttribute('data-estado');
+                validarDoc(idDocumento, estado);
+            });
+        });
+
+        async function validarDoc(idDocumento, estado) {
+            try {
+                const resp = await fetch('/clientes/validar-documento', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idDocumento, estado })
+                });
+
+                const result = await resp.json();
+
+                if (result.exito) {
+                    document.getElementById('estado-' + idDocumento).textContent = estado;
+                    alert('Documento ' + estado.toLowerCase());
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!-- Hasta aqui-->

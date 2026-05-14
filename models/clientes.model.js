@@ -51,7 +51,7 @@ module.exports.GuardarCliente = async (datosCliente, archivos) => {
 
         const idCliente = cliente[0].idcliente;
 
-        // Guardar los docuemtnos subidos 
+        // Guardar documentos si se subieron archivos
         if (archivos && Object.keys(archivos).length > 0) {
             for (const [tipoDoc, archivo] of Object.entries(archivos)) {
                 if (archivo && archivo.size > 0) {
@@ -75,7 +75,7 @@ module.exports.GuardarCliente = async (datosCliente, archivos) => {
 };
 
 
-// Cliente por ID
+// Obtener un cliente por su ID
 module.exports.ObtenerClientePorId = async (idCliente) => {
     try {
         const { data, error } = await supabase
@@ -93,7 +93,7 @@ module.exports.ObtenerClientePorId = async (idCliente) => {
 };
 
 
-// Editar cliente
+// Editar cliente existente
 module.exports.EditarCliente = async (idCliente, datosActualizados) => {
     try {
         const { error } = await supabase
@@ -117,6 +117,41 @@ module.exports.EliminarCliente = async (idCliente) => {
             .from('cliente')
             .delete()
             .eq('idcliente', idCliente);
+
+        if (error) throw new Error(error.message);
+        return { exito: true };
+
+    } catch (error) {
+        return { exito: false, error: error.message };
+    }
+};
+
+
+// Obtener documentos de un cliente
+module.exports.ObtenerDocumentosCliente = async (idCliente) => {
+    try {
+        const { data: documentos, error } = await supabase
+            .from('documentocliente')
+            .select('*')
+            .eq('idcliente', idCliente)
+            .order('iddocumentocliente', { ascending: false });
+
+        if (error) throw new Error(error.message);
+        return { exito: true, documentos: documentos || [] };
+
+    } catch (error) {
+        return { exito: false, documentos: [], error: error.message };
+    }
+};
+
+
+// Actualizar estado de validacion de documento
+module.exports.ActualizarEstadoDocumento = async (idDocumento, estadoValidacion) => {
+    try {
+        const { error } = await supabase
+            .from('documentocliente')
+            .update({ estadovalidacion: estadoValidacion })
+            .eq('iddocumentocliente', idDocumento);
 
         if (error) throw new Error(error.message);
         return { exito: true };
